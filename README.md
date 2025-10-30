@@ -1,5 +1,9 @@
 # Experimental Results on Goldbach's Conjecture
 
+![Goldbach partitions of the even integers.](docs/goldbach.png)
+
+This work builds upon [Geometric Insights into the Goldbach Conjecture](https://github.com/frankvegadelgado/goldbach).
+
 ## Computational Analysis
 
 We conducted an extensive computational experiment to validate the geometric perspective on Goldbach's conjecture. The experiment analyzed the cardinality of valid M-values (denoted as $|D_N|$) for integers $N$ in the range $4 \leq N \leq 2^{14}$ (16,384).
@@ -12,8 +16,10 @@ We conducted an extensive computational experiment to validate the geometric per
 ### Key Metric: Gap Function
 We defined a gap function to measure the density of valid M-values:
 $$G(N) = \log^{2}(2N) - (N - |D_N|)$$
+
 where
-$$D_N = \{ M = \frac{Q - P}{2} \mid 2 < P < N < Q < 2N, \text{ and } P, Q \text{ are prime} \}.$$
+
+$$D_N = \\{M = \frac{Q - P}{2} \mid 2 < P < N < Q < 2N, \text{ and } P, Q \text{ are prime}\\}.$$
 
 ### Results Summary
 

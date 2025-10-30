@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <title>Experiment</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+      code:not(.language-diff) {
+        background-color: white;
+        color: black;
+        display: inline-block;
+      }
+      code.language-diff {
+        background-color: while;
+        color: green;
+      }
+    </style>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js"],
+        "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno" },
+        TeX: { noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } } },
+        messageStyle: "none"
+      });
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"
+    ></script>
+  </head>
+  <body>
+    <h1>Experimental Results on Goldbach's Conjecture</h1>
+    <p>
+      <img
+        src="goldbach.png"
+        alt="Goldbach partitions of the even integers."
+      />
+    </p>
+    <p>
+      This work builds upon
+      <a href="https://github.com/frankvegadelgado/goldbach"
+        >Geometric Insights into the Goldbach Conjecture</a
+      >.
+    </p>
+    <h2>Computational Analysis</h2>
+    <p>
+      We conducted an extensive computational experiment to validate the
+      geometric perspective on Goldbach's conjecture. The experiment analyzed
+      the cardinality of valid M-values (denoted as $|D_N|$) for integers $N$ in
+      the range $4 \leq N \leq 2^{14}$ (16,384).
+    </p>
+    <h3>Experimental Setup</h3>
+    <ul>
+      <li>
+        <strong>Platform</strong>: Standard workstation (11th Gen Intel i7, 32GB
+        RAM)
+      </li>
+      <li>
+        <strong>Implementation</strong>: Python 3.12 with Gmpy2 library for
+        efficient prime number operations
+      </li>
+      <li>
+        <strong>Methodology</strong>: Deterministic computation of $|D_N|$ for
+        each $N$ in the specified range
+      </li>
+    </ul>
+    <h3>Key Metric: Gap Function</h3>
+    <p>
+      We defined a gap function to measure the density of valid M-values: $$G(N)
+      = \log^{2}(2N) - (N - |D_N|)$$
+    </p>
+    <p>where</p>
+    <p>
+      $$D_N = \{M = \frac{Q - P}{2} \mid 2 &lt; P &lt; N &lt; Q &lt; 2N, \text{
+      and } P, Q \text{ are prime}\}.$$
+    </p>
+    <h3>Results Summary</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Interval (m)</th>
+          <th>Range $[2^m, 2^{m+1}]$</th>
+          <th>Minima at N</th>
+          <th>Min G(N) Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2</td>
+          <td>$[4, 8]$</td>
+          <td>5</td>
+          <td>1.301898</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>$[8, 16]$</td>
+          <td>11</td>
+          <td>4.554543</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>$[16, 32]$</td>
+          <td>17</td>
+          <td>7.435219</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>$[32, 64]$</td>
+          <td>61</td>
+          <td>11.078618</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>$[64, 128]$</td>
+          <td>73</td>
+          <td>14.836335</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>$[128, 256]$</td>
+          <td>151</td>
+          <td>17.608977</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>$[256, 512]$</td>
+          <td>269</td>
+          <td>20.537165</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>$[512, 1024]$</td>
+          <td>541</td>
+          <td>25.812111</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>$[1024, 2048]$</td>
+          <td>1327</td>
+          <td>30.154668</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>$[2048, 4096]$</td>
+          <td>2161</td>
+          <td>32.081569</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>$[4096, 8192]$</td>
+          <td>7069</td>
+          <td>39.329014</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>$[8192, 16384]$</td>
+          <td>14138</td>
+          <td>41.057758</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Key Findings</h3>
+    <ol>
+      <li>
+        <p>
+          <strong>Consistent Positivity</strong>: $G(N) &gt; 0$ for all tested
+          $N$, indicating: $$|D_N| &gt; N - \log^{2}(2N)$$
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Monotonic Growth</strong>: The minimum value of $G(N)$
+          strictly increases across successive power-of-two intervals,
+          demonstrating robust growth in the density of valid M-values.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Empirical Lower Bound</strong>: The experimental data provides
+          strong evidence that the number of &quot;bad&quot; M-values (those not
+          in $D_N$) is bounded by $\log^{2}(2N)$.
+        </p>
+      </li>
+    </ol>
+    <h3>Implications</h3>
+    <p>
+      These results support the main theoretical conclusion that for every $N
+      \geq 4$, there exists at least one valid M-value in the range $[1, N-3]$
+      such that both $P = N - M$ and $Q = N + M$ are prime, thereby verifying
+      the Goldbach conjecture variant for even integers $\geq 8$.
+    </p>
+    <p>
+      The increasing trend in $G(N)$ minima suggests that the conjecture becomes
+      progressively easier to satisfy as $N$ grows larger, aligning with known
+      asymptotic results in prime number theory.
+    </p>
+  </body>
+</html>
