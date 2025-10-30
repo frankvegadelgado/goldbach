@@ -76,9 +76,9 @@ To illustrate, Figure 1 depicts the construction for a generic $N$ and $M$.
 ## Geometric Construction
 
 <div align="center" style="padding: 20px;">
-   <img src="docs/geometric.svg" alt="Geometric Construction" width="400">
+   <img src="docs/geometric.svg" alt="Geometric Construction">
    <br>
-   <em><strong>Figure 1:</strong> Geometric construction illustrating the L-shaped semiprime region between nested squares of sides $N$ and $M$ sharing the origin corner $O$. The horizontal extension of length $P = N - M$ and vertical extension of length $Q = N + M$ bound the region of area $P \cdot Q = N^2 - M^2$. For $N=5$, $M=2$, $P=3$, $Q=7$ (both prime), area $25-4=21=3 \cdot 7$, and $3+7=10=2 \cdot 5$.</em>
+   <em><strong>Figure 1:</strong> Geometric construction illustrating the L-shaped semiprime region between nested squares of sides N and M sharing the origin corner O. The horizontal extension of length P = N − M and vertical extension of length Q = N + M bound the region of area P · Q = N² − M². For N=5, M=2, P=3, Q=7 (both prime), area 25−4=21=3·7, and 3+7=10=2·5.</em>
 </div>
 
 ## 3. Deeper Analysis and Implications
