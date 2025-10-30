@@ -13,7 +13,7 @@ We conducted an extensive computational experiment to validate the geometric per
 We defined a gap function to measure the density of valid M-values:
 $$G(N) = \log^{2}(2N) - (N - |D_N|)$$
 where
-$$D_N = \left\{ M = \frac{Q - P}{2} \mid 2 < P < N < Q < 2N, \text{ and } P, Q \text{ are prime} \right\}.$$
+$$D_N = \{ M = \frac{Q - P}{2} \mid 2 < P < N < Q < 2N, \text{ and } P, Q \text{ are prime} \}.$$
 
 ### Results Summary
 
