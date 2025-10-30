@@ -2,7 +2,7 @@
 
 ![Goldbach partitions of the even integers.](docs/goldbach.png)
 
-This work builds upon [Geometric Insights into the Goldbach Conjecture](https://github.com/frankvegadelgado/goldbach).
+This work builds upon [Geometric Insights into the Goldbach Conjecture](https://hackmd.io/@frankvega/S1ABKPZ1Wl).
 
 **Author:** Frank Vega  
 **Date:** October 30, 2025  
