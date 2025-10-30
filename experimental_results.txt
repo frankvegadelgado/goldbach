@@ -1,14 +1,14 @@
-2025-10-29 23:50:11,099 - INFO - Starting test for 2^2 to 2^14
-2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^2 and 2^3 => n = 5 with gap=2.3018981104783993
-2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^3 and 2^4 => n = 9 with gap=5.354248898843764
-2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^4 and 2^5 => n = 18 with gap=7.8416079822736044
-2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^5 and 2^6 => n = 33 with gap=11.553206857384513
-2025-10-29 23:50:11,115 - INFO - Mininum gap between 2^6 and 2^7 => n = 65 with gap=15.692891626371928
-2025-10-29 23:50:11,130 - INFO - Mininum gap between 2^7 and 2^8 => n = 165 with gap=17.629475615018023
-2025-10-29 23:50:11,277 - INFO - Mininum gap between 2^8 and 2^9 => n = 270 with gap=21.583842237842624
-2025-10-29 23:50:12,507 - INFO - Mininum gap between 2^9 and 2^10 => n = 680 with gap=26.059687950665094
-2025-10-29 23:50:18,207 - INFO - Mininum gap between 2^10 and 2^11 => n = 1328 with gap=31.166546751447314
-2025-10-29 23:50:57,176 - INFO - Mininum gap between 2^11 and 2^12 => n = 2163 with gap=33.097058426340894
-2025-10-29 23:55:28,608 - INFO - Mininum gap between 2^12 and 2^13 => n = 7071 with gap=40.334421178690945
-2025-10-30 00:26:50,938 - INFO - Mininum gap between 2^13 and 2^14 => n = 14138 with gap=41.05775773297714
-2025-10-30 00:26:50,938 - INFO - Finished test for 2^2 to 2^14
+2025-10-30 10:28:35,029 - INFO - Starting test for 2^2 to 2^14
+2025-10-30 10:28:35,029 - INFO - Minimum gap between 2^2 and 2^3 for N = 5 with G(N) = 1.3018981104783993
+2025-10-30 10:28:35,029 - INFO - Minimum gap between 2^3 and 2^4 for N = 11 with G(N) = 4.554543448463397
+2025-10-30 10:28:35,029 - INFO - Minimum gap between 2^4 and 2^5 for N = 17 with G(N) = 7.43521854957117
+2025-10-30 10:28:35,029 - INFO - Minimum gap between 2^5 and 2^6 for N = 61 with G(N) = 11.078618198240012
+2025-10-30 10:28:35,029 - INFO - Minimum gap between 2^6 and 2^7 for N = 73 with G(N) = 14.836334959935176
+2025-10-30 10:28:35,060 - INFO - Minimum gap between 2^7 and 2^8 for N = 151 with G(N) = 17.60897672076485
+2025-10-30 10:28:35,232 - INFO - Minimum gap between 2^8 and 2^9 for N = 269 with G(N) = 20.53716527259983
+2025-10-30 10:28:36,408 - INFO - Minimum gap between 2^9 and 2^10 for N = 541 with G(N) = 25.81211089170285
+2025-10-30 10:28:43,857 - INFO - Minimum gap between 2^10 and 2^11 for N = 1327 with G(N) = 30.154668483672438
+2025-10-30 10:29:36,319 - INFO - Minimum gap between 2^11 and 2^12 for N = 2161 with G(N) = 32.08156918181025
+2025-10-30 10:35:38,880 - INFO - Minimum gap between 2^12 and 2^13 for N = 7069 with G(N) = 39.3290142406467
+2025-10-30 11:17:26,032 - INFO - Minimum gap between 2^13 and 2^14 for N = 14138 with G(N) = 41.05775773297714
+2025-10-30 11:17:26,032 - INFO - Finished test for 2^2 to 2^14

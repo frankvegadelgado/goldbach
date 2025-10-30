@@ -74,14 +74,15 @@ def generate_primes_in_interval(start, end):
     return primes_in_interval
 
 
-def compute_differences(primes_in_interval, all_primes):
+def compute_differences(primes_in_interval, all_primes, n):
     """
     Compute the set of unique values (p - q) // 2 for p in primes_in_interval and q in all_primes.
 
     Args:
         primes_in_interval (list): List of primes in the current interval.
         all_primes (list): List of all primes up to the current n.
-
+        n (int): An integer between the intervals
+        
     Returns:
         set: Set of unique difference values.
     """
@@ -89,6 +90,8 @@ def compute_differences(primes_in_interval, all_primes):
     for p in primes_in_interval:
         for q in all_primes:
             value = (p - q) // 2
+            if q == n or value in diff:
+                continue
             diff.add(value)
     return diff
 
@@ -140,25 +143,25 @@ def test(min_exp, max_exp):
             r = gmpy2.next_prime(r)
 
         # Compute set of differences {(p - q)/2} for p in primes_in_interval, q in primes
-        diff = compute_differences(primes_in_interval, primes)
+        D = compute_differences(primes_in_interval, primes, n)
 
-        # Test the experimental claim: gap = (log(2n))^2 - (n - len(diff))
-        log = (math.log(2 * n)) ** 2
-        gap = log - (n - len(diff))
+        # Test the experimental claim: gap = (log(2n))^2 - (n - len(D))
+        log_square = (math.log(2 * n)) ** 2
+        gap = log_square - (n - len(D))
 
         if gap <= 0:
-            printer.info(f'The Experimental Result failed for {n}: {n - len(diff)} >= {log}')
+            printer.info(f'The Experimental Result failed for {n}: {n - len(D)} >= {log_square}')
             raise RuntimeError("The Experimental Result failed.")
         elif min_gap > gap:
             ngap = n
             min_gap = gap
 
-        # Log progress when crossing powers of 2
+        # Logging progress when crossing powers of 2
         current_log2 = math.floor(math.log2(n))
         if current_log2 > log2:
             log2 = current_log2
             printer.info(
-                f'Mininum gap between 2^{log2-1} and 2^{log2} => n = {ngap} with gap={min_gap}'
+                f'Minimum gap between 2^{log2-1} and 2^{log2} for N = {ngap} with G(N) = {min_gap}'
             )
             min_gap = 2 * n
 
