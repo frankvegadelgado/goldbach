@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 280 300" width="600" height="650">
+  <defs>
+    <style>
+      text { font-family: 'Computer Modern', 'Latin Modern Math', 'Times New Roman', serif; font-size: 11px; }
+      .math { font-style: italic; }
+      .label { font-size: 13px; }
+      .small { font-size: 10px; }
+    </style>
+    <marker id="arrowred" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc3545" />
+    </marker>
+    <marker id="arrowblue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0d6efd" />
+    </marker>
+  </defs>
+  
+  <!-- Shaded L-shaped region -->
+  <rect x="80" y="0" width="120" height="200" fill="#999999" opacity="0.3" />
+  <rect x="0" y="80" width="80" height="120" fill="#999999" opacity="0.3" />
+  
+  <!-- Outer square S_N -->
+  <rect x="0" y="0" width="200" height="200" fill="none" stroke="black" stroke-width="2.5" />
+  
+  <!-- Inner square S_M -->
+  <rect x="0" y="0" width="80" height="80" fill="white" stroke="black" stroke-width="2.5" />
+  
+  <!-- Dashed square S_P -->
+  <rect x="80" y="80" width="120" height="120" fill="none" stroke="black" stroke-width="2" stroke-dasharray="8,4" />
+  
+  <!-- Origin corner label -->
+  <text x="-8" y="8" class="label math">O</text>
+  
+  <!-- Side labels for outer square -->
+  <text x="100" y="-8" text-anchor="middle" class="label math">N</text>
+  <text x="212" y="105" text-anchor="start" class="label math">N</text>
+  
+  <!-- Side labels for inner square -->
+  <text x="40" y="-8" text-anchor="middle" class="label math">M</text>
+  <text x="88" y="45" text-anchor="start" class="label math">M</text>
+  
+  <!-- S_N label inside dashed square (bottom-right corner) -->
+  <text x="175" y="190" class="label math" fill="#333">S<tspan baseline-shift="sub" font-size="9">N</tspan></text>
+  
+  <!-- S_P label (top-left corner of dashed square) -->
+  <text x="90" y="95" class="label math" fill="#666">S<tspan baseline-shift="sub" font-size="9">P</tspan></text>
+  
+  <!-- S_M label -->
+  <text x="50" y="50" class="label math" fill="#666">S<tspan baseline-shift="sub" font-size="9">M</tspan></text>
+  
+  <!-- Red arrow and label for P = N - M (bottom) -->
+  <line x1="80" y1="-20" x2="195" y2="-20" stroke="#dc3545" stroke-width="2.5" marker-end="url(#arrowred)" />
+  <text x="137" y="-26" text-anchor="middle" class="label math" fill="#dc3545">P = N − M</text>
+  
+  <!-- Blue arrow and label for Q = N + M (left) -->
+  <line x1="-20" y1="80" x2="-20" y2="195" stroke="#0d6efd" stroke-width="2.5" marker-end="url(#arrowblue)" />
+  <text x="-26" y="140" text-anchor="middle" class="label math" fill="#0d6efd" transform="rotate(-90, -26, 140)">Q = N + M</text>
+  
+  <!-- Central area formula -->
+  <text x="140" y="150" text-anchor="middle" class="label math">
+    N<tspan baseline-shift="super" font-size="8">2</tspan> − M<tspan baseline-shift="super" font-size="8">2</tspan> = P · Q
+  </text>
+  
+  <!-- Bottom description -->
+  <text x="100" y="225" text-anchor="middle" class="small">
+    Area: semiprime if P, Q prime
+  </text>
+</svg>
