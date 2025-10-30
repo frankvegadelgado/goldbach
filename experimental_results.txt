@@ -1,0 +1,14 @@
+2025-10-29 23:50:11,099 - INFO - Starting test for 2^2 to 2^14
+2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^2 and 2^3 => n = 5 with gap=2.3018981104783993
+2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^3 and 2^4 => n = 9 with gap=5.354248898843764
+2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^4 and 2^5 => n = 18 with gap=7.8416079822736044
+2025-10-29 23:50:11,099 - INFO - Mininum gap between 2^5 and 2^6 => n = 33 with gap=11.553206857384513
+2025-10-29 23:50:11,115 - INFO - Mininum gap between 2^6 and 2^7 => n = 65 with gap=15.692891626371928
+2025-10-29 23:50:11,130 - INFO - Mininum gap between 2^7 and 2^8 => n = 165 with gap=17.629475615018023
+2025-10-29 23:50:11,277 - INFO - Mininum gap between 2^8 and 2^9 => n = 270 with gap=21.583842237842624
+2025-10-29 23:50:12,507 - INFO - Mininum gap between 2^9 and 2^10 => n = 680 with gap=26.059687950665094
+2025-10-29 23:50:18,207 - INFO - Mininum gap between 2^10 and 2^11 => n = 1328 with gap=31.166546751447314
+2025-10-29 23:50:57,176 - INFO - Mininum gap between 2^11 and 2^12 => n = 2163 with gap=33.097058426340894
+2025-10-29 23:55:28,608 - INFO - Mininum gap between 2^12 and 2^13 => n = 7071 with gap=40.334421178690945
+2025-10-30 00:26:50,938 - INFO - Mininum gap between 2^13 and 2^14 => n = 14138 with gap=41.05775773297714
+2025-10-30 00:26:50,938 - INFO - Finished test for 2^2 to 2^14
