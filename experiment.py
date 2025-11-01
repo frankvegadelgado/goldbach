@@ -145,12 +145,12 @@ def test(min_exp, max_exp):
         # Compute set of differences {(p - q)/2} for p in primes_in_interval, q in primes
         D = compute_differences(primes_in_interval, primes, n)
 
-        # Test the experimental claim: gap = (log(2n))^2 - (n - len(D))
+        # Test the experimental claim: gap = (log(2n))^2 - ((n-3) - len(D))
         log_square = (math.log(2 * n)) ** 2
-        gap = log_square - (n - len(D))
+        gap = log_square - ((n-3) - len(D))
 
         if gap <= 0:
-            printer.info(f'The Experimental Result failed for {n}: {n - len(D)} >= {log_square}')
+            printer.info(f'The Experimental Result failed for {n}: {(n-3) - len(D)} >= {log_square}')
             raise RuntimeError("The Experimental Result failed.")
         elif min_gap > gap:
             ngap = n

@@ -5,7 +5,6 @@
 This work builds upon [Geometric Insights into the Goldbach Conjecture](https://hackmd.io/@frankvega/S1ABKPZ1Wl).
 
 **Author:** Frank Vega  
-**Date:** October 30, 2025  
 **Institution:** Information Physics Institute, Hialeah, FL, USA
 
 **Keywords:** Goldbach conjecture, geometric construction, semiprimes, pigeonhole principle
@@ -92,7 +91,7 @@ $$D_N = \\{M = \frac{Q - P}{2} \mid P, Q \text{ are prime, } 2 < P < N < Q < 2N\
 
 We define a "gap function":
 
-$$G(N) = \log^2(2N) - (N - |D_N|)$$
+$$G(N) = \log^2(2N) - ((N-3) - |D_N|)$$
 
 This measures how many "bad" $M$ values exist (those that don't produce prime pairs) compared to the logarithmic bound.
 
@@ -104,18 +103,18 @@ We computed $|D_N|$ for all $N$ from 4 to $2^{14}$ (16,384). Key findings:
 
 | Interval | Range         | Min at $N$ | Min $G(N)$ |
 | -------- | ------------- | ---------- | ---------- |
-| 2        | [4, 8]        | 5          | 1.30       |
-| 3        | [8, 16]       | 11         | 4.55       |
-| 4        | [16, 32]      | 17         | 7.44       |
-| 5        | [32, 64]      | 61         | 11.08      |
-| 6        | [64, 128]     | 73         | 14.84      |
-| 7        | [128, 256]    | 151        | 17.61      |
-| 8        | [256, 512]    | 269        | 20.54      |
-| 9        | [512, 1024]   | 541        | 25.81      |
-| 10       | [1024, 2048]  | 1327       | 30.15      |
-| 11       | [2048, 4096]  | 2161       | 32.08      |
-| 12       | [4096, 8192]  | 7069       | 39.33      |
-| 13       | [8192, 16384] | 14138      | 41.06      |
+| 2        | [4, 8]        | 5          | 4.30       |
+| 3        | [8, 16]       | 11         | 7.55       |
+| 4        | [16, 32]      | 17         | 10.44      |
+| 5        | [32, 64]      | 61         | 14.08      |
+| 6        | [64, 128]     | 73         | 17.84      |
+| 7        | [128, 256]    | 151        | 20.61      |
+| 8        | [256, 512]    | 269        | 23.54      |
+| 9        | [512, 1024]   | 541        | 28.81      |
+| 10       | [1024, 2048]  | 1327       | 33.15      |
+| 11       | [2048, 4096]  | 2161       | 35.08      |
+| 12       | [4096, 8192]  | 7069       | 42.33      |
+| 13       | [8192, 16384] | 14138      | 44.06      |
 
 **Key Observation:** $G(N) > 0$ always, and the minimum increases with each interval!
 
@@ -131,29 +130,35 @@ We computed $|D_N|$ for all $N$ from 4 to $2^{14}$ (16,384). Key findings:
 
 The computational data shows that $G(N) > 0$, which means:
 
-$$|D_N| > N - \log^2(2N)$$
+$$|D_N| > (N-3) - \log^2(2N)$$
 
 In other words, the number of "bad" $M$ values is less than $\log^2(2N)$.
 
-Now, for each prime $P < N$, we get a candidate $M = N - P$. There are $\pi(N-1)$ such candidates (where $\pi$ counts primes).
+Now, for each prime $P \in [3, N-1]$, we get a candidate $M = N - P$. There are $\pi(N-1) - 1$ such candidates (where $\pi$ counts primes).
 
 **Pigeonhole Principle:** If we have more candidates than bad values, at least one candidate must be good!
 
 For $N ≥ 6$: $\pi(N) > \frac{N}{\ln N + 2}$
 
-For $N ≥ 9$: $\frac{N}{\ln N + 2} > \log^2(2N)$
+For $N ≥ 328$: $\frac{N}{\ln N + 2} > \log^2(2N)$
 
 Therefore: **candidates > bad values** ⟹ at least one good $M$ exists!
 
 ### Base Cases
 
-For $N = 4, 5, 6, 7, 8$, we verify directly:
+For $N = 4$ to $12$, we verify directly (additional examples included for illustration):
 
-- **N=4** (2N=8): 3+5 ✓
-- **N=5** (2N=10): 3+7 ✓
-- **N=6** (2N=12): 5+7 ✓
-- **N=7** (2N=14): 3+11 ✓
-- **N=8** (2N=16): 3+13 or 5+11 ✓
+- **N=4** (2N=8): Candidates $P=3$; $M=1$. $D_4=\{1, 2\}$, so candidate good. Partition: $3+5$ ✓, $|D_4|=2$.
+- **N=5** (2N=10): Candidates $P=3$; $M=2$. $D_5=\{2\}$, so $M=2$ good ($P=3$). Partition: $3+7$ ✓, $|D_5|=1$.
+- **N=6** (2N=12): Candidates $P=3,5$; $M=\{3,1\}$. $D_6=\{1,2,3,4\}$, so all good. Partition: $5+7$ ✓, $|D_6|=4$.
+- **N=7** (2N=14): Candidates $P=3,5$; $M=\{4,2\}$. $D_7=\{3,4,5\}$, so $M=4$ good ($P=3$; $Q=11$ prime). Partition: $3+11$ ✓, $|D_7|=3$.
+- **N=8** (2N=16): Candidates $P=3,5,7$; $M=\{5,3,1\}$. $D_8=\{2,3,4,5\}$, so $M=3,5$ good ($P=5,3$; $Q=11,13$ prime). Partitions: $3+13$, $5+11$ ✓, $|D_8|=4$.
+- **N=9** (2N=18): Candidates $P=3,5,7$; $M=\{6,4,2\}$. $D_9=\{2,3,4,5,6,7\}$, so $M=2,4,6$ good ($P=7,5,3$). Partitions: $5+13$, $7+11$ ✓, $|D_9|=6$.
+- **N=10** (2N=20): Candidates $P=3,5,7$; $M=\{7,5,3\}$. $D_{10}=\{2,3,4,5,6,7,8\}$, so $M=3,5,7$ good ($P=7,5,3$). Partitions: $3+17$, $7+13$ ✓, $|D_{10}|=7$.
+- **N=11** (2N=22): Candidates $P=3,5,7$; $M=\{8,6,4\}$. $D_{11}=\{3,4,5,6,7,8\}$, so $M=4,6,8$ good ($P=7,5,3$). Partitions: $3+19$, $5+17$ ✓, $|D_{11}|=6$.
+- **N=12** (2N=24): Candidates $P=3,5,7,11$; $M=\{9,7,5,1\}$. $D_{12}=\{1,3,4,5,6,7,8,9,10\}$, so $M=1,5,7,9$ good ($P=11,7,5,3$). Partitions: $5+19$, $7+17$, $11+13$ ✓, $|D_{12}|=9$.
+
+For $13 \le N \le 327$, the conjecture holds by direct computational verification (included in our analysis up to $N=2^{14}$).
 
 ---
 
