@@ -148,15 +148,15 @@ Therefore: **candidates > bad values** ⟹ at least one good $M$ exists!
 
 For $N = 4$ to $12$, we verify directly (additional examples included for illustration):
 
-- **N=4** (2N=8): Candidates $P=3$; $M=1$. $D_4=\{1, 2\}$, so candidate good. Partition: $3+5$ ✓, $|D_4|=2$.
-- **N=5** (2N=10): Candidates $P=3$; $M=2$. $D_5=\{2\}$, so $M=2$ good ($P=3$). Partition: $3+7$ ✓, $|D_5|=1$.
-- **N=6** (2N=12): Candidates $P=3,5$; $M=\{3,1\}$. $D_6=\{1,2,3,4\}$, so all good. Partition: $5+7$ ✓, $|D_6|=4$.
-- **N=7** (2N=14): Candidates $P=3,5$; $M=\{4,2\}$. $D_7=\{3,4,5\}$, so $M=4$ good ($P=3$; $Q=11$ prime). Partition: $3+11$ ✓, $|D_7|=3$.
-- **N=8** (2N=16): Candidates $P=3,5,7$; $M=\{5,3,1\}$. $D_8=\{2,3,4,5\}$, so $M=3,5$ good ($P=5,3$; $Q=11,13$ prime). Partitions: $3+13$, $5+11$ ✓, $|D_8|=4$.
-- **N=9** (2N=18): Candidates $P=3,5,7$; $M=\{6,4,2\}$. $D_9=\{2,3,4,5,6,7\}$, so $M=2,4,6$ good ($P=7,5,3$). Partitions: $5+13$, $7+11$ ✓, $|D_9|=6$.
-- **N=10** (2N=20): Candidates $P=3,5,7$; $M=\{7,5,3\}$. $D_{10}=\{2,3,4,5,6,7,8\}$, so $M=3,5,7$ good ($P=7,5,3$). Partitions: $3+17$, $7+13$ ✓, $|D_{10}|=7$.
-- **N=11** (2N=22): Candidates $P=3,5,7$; $M=\{8,6,4\}$. $D_{11}=\{3,4,5,6,7,8\}$, so $M=4,6,8$ good ($P=7,5,3$). Partitions: $3+19$, $5+17$ ✓, $|D_{11}|=6$.
-- **N=12** (2N=24): Candidates $P=3,5,7,11$; $M=\{9,7,5,1\}$. $D_{12}=\{1,3,4,5,6,7,8,9,10\}$, so $M=1,5,7,9$ good ($P=11,7,5,3$). Partitions: $5+19$, $7+17$, $11+13$ ✓, $|D_{12}|=9$.
+- **N=4** (2N=8): Candidates $P=3$; $M=1$. $D_4=\\{1, 2\\}$, so candidate good. Partition: $3+5$ ✓, $|D_4|=2$.
+- **N=5** (2N=10): Candidates $P=3$; $M=2$. $D_5=\\{2\\}$, so $M=2$ good ($P=3$). Partition: $3+7$ ✓, $|D_5|=1$.
+- **N=6** (2N=12): Candidates $P=3,5$; $M=\\{3,1\\}$. $D_6=\\{1,2,3,4\\}$, so all good. Partition: $5+7$ ✓, $|D_6|=4$.
+- **N=7** (2N=14): Candidates $P=3,5$; $M=\\{4,2\\}$. $D_7=\\{3,4,5\\}$, so $M=4$ good ($P=3$; $Q=11$ prime). Partition: $3+11$ ✓, $|D_7|=3$.
+- **N=8** (2N=16): Candidates $P=3,5,7$; $M=\\{5,3,1\\}$. $D_8=\\{2,3,4,5\\}$, so $M=3,5$ good ($P=5,3$; $Q=11,13$ prime). Partitions: $3+13$, $5+11$ ✓, $|D_8|=4$.
+- **N=9** (2N=18): Candidates $P=3,5,7$; $M=\\{6,4,2\\}$. $D_9=\\{2,3,4,5,6,7\\}$, so $M=2,4,6$ good ($P=7,5,3$). Partitions: $5+13$, $7+11$ ✓, $|D_9|=6$.
+- **N=10** (2N=20): Candidates $P=3,5,7$; $M=\\{7,5,3\\}$. $D_{10}=\\{2,3,4,5,6,7,8\\}$, so $M=3,5,7$ good ($P=7,5,3$). Partitions: $3+17$, $7+13$ ✓, $|D_{10}|=7$.
+- **N=11** (2N=22): Candidates $P=3,5,7$; $M=\\{8,6,4\\}$. $D_{11}=\\{3,4,5,6,7,8\\}$, so $M=4,6,8$ good ($P=7,5,3$). Partitions: $3+19$, $5+17$ ✓, $|D_{11}|=6$.
+- **N=12** (2N=24): Candidates $P=3,5,7,11$; $M=\\{9,7,5,1\\}$. $D_{12}=\\{1,3,4,5,6,7,8,9,10\\}$, so $M=1,5,7,9$ good ($P=11,7,5,3$). Partitions: $5+19$, $7+17$, $11+13$ ✓, $|D_{12}|=9$.
 
 For $13 \le N \le 327$, the conjecture holds by direct computational verification (included in our analysis up to $N=2^{14}$).
 
