@@ -138,9 +138,9 @@ Now, for each prime $P \in [3, N-1]$, we get a candidate $M = N - P$. There are 
 
 **Pigeonhole Principle:** If we have more candidates than bad values, at least one candidate must be good!
 
-For $N ≥ 6$: $\pi(N) > \frac{N}{\ln N + 2}$
+For $N ≥ 6$: $\pi(N) > \frac{N}{\log N + 2}$
 
-For $N ≥ 328$: $\frac{N}{\ln N + 2} > \log^2(2N)$
+For $N ≥ 328$: $\frac{N}{\log N + 2} > \log^2(2N)$
 
 Therefore: **candidates > bad values** ⟹ at least one good $M$ exists!
 
