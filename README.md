@@ -180,9 +180,7 @@ The computational verification is available in this repository. Run `python expe
 
 **Requirements:** Python 3.12+, gmpy2 library
 
-The key changes maintain the mathematical rigor while more accurately representing the nature of the evidence presented - computational verification combined with theoretical reasoning rather than a complete formal proof.
-
 ---
 
 ## Documentation
-Available as PDF at [Geometric Insights into the Goldbach Conjecture](https://www.preprints.org/manuscript/202511.0701/v1).
+Available as PDF at [Geometric Insights into the Goldbach Conjecture](https://www.preprints.org/manuscript/202511.0701/v3).
