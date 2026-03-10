@@ -183,4 +183,4 @@ The computational verification is available in this repository. Run `python expe
 ---
 
 ## Documentation
-Available as PDF at [Geometric Insights into the Goldbach Conjecture](https://www.preprints.org/manuscript/202511.0701/v3).
+Available as PDF at [Geometric Insights into the Goldbach Conjecture](https://www.preprints.org/manuscript/202511.0701/v4).
