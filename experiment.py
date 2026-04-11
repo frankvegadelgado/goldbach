@@ -90,7 +90,7 @@ def compute_differences(primes_in_interval, all_primes, n):
     for p in primes_in_interval:
         for q in all_primes:
             value = (p - q) // 2
-            if q == n or value in diff:
+            if q == n or value in diff or value > n - 3:
                 continue
             diff.add(value)
     return diff

@@ -13,11 +13,11 @@ This work builds upon [Geometric Insights into the Goldbach Conjecture](https://
 
 ## Abstract
 
-The Goldbach conjecture states that every even integer greater than 2 is the sum of two primes. We present a computational approach that provides strong evidence for a variant: **every even integer ≥ 8 is the sum of two distinct primes**.
+The Goldbach conjecture states that every even integer greater than 2 is the sum of two primes. We present a computational approach that provides strong evidence for a variant: **every even integer $\geq 8$ is the sum of two distinct primes**.
 
-Our key insight is a geometric equivalence: this is true if and only if for every $N ≥ 4$, there exists an integer $M$ such that the L-shaped region $N^2 - M^2$ between nested squares has a semiprime area $P \cdot Q$, where $P = N - M$ and $Q = N + M$ are both prime.
+Our key insight is a geometric equivalence: this is true if and only if for every $N \geq 4$, there exists an integer $M$ such that the L-shaped region $N^2 - M^2$ between nested squares has a semiprime area $P \cdot Q$, where $P = N - M$ and $Q = N + M$ are both prime.
 
-Through computational analysis up to $N = 2^{14}$ and application of the pigeonhole principle, we demonstrate this variant holds for all $N ≥ 4$ within our verified range and provide strong theoretical evidence for its general validity.
+Through computational analysis up to $N = 2^{14}$ and application of the pigeonhole principle, we demonstrate this variant holds for all $N \geq 4$ within our verified range and provide strong theoretical evidence for its general validity.
 
 ---
 
@@ -27,7 +27,7 @@ The Goldbach conjecture is one of mathematics' oldest unsolved problems: can eve
 
 We study a variant that excludes identical primes:
 
-> **Variant:** Every even integer ≥ 8 is the sum of two **distinct** primes.
+> **Variant:** Every even integer $\geq 8$ is the sum of two **distinct** primes.
 
 This excludes $4 = 2 + 2$ and $6 = 3 + 3$ while preserving the essence of the original conjecture.
 
@@ -39,7 +39,7 @@ We provide strong computational and theoretical evidence for this variant by con
 
 ### Construction
 
-Start with a square $S_N$ of side length $N ≥ 4$. Inside it, place a smaller square $S_M$ of side length $M$ (where $1 ≤ M ≤ N-3$) sharing the same corner. The L-shaped region between them has area:
+Start with a square $S_N$ of side length $N \geq 4$. Inside it, place a smaller square $S_M$ of side length $M$ (where $1 \leq M \leq N-3$) sharing the same corner. The L-shaped region between them has area:
 
 $$N^2 - M^2 = (N - M)(N + M)$$
 
@@ -51,7 +51,7 @@ Let $P = N - M$ and $Q = N + M$. Then:
 
 ### The Key Equivalence
 
-**The Goldbach variant is true ⟺ For every $N ≥ 4$, there exists an $M$ making both $P$ and $Q$ prime.**
+**The Goldbach variant is true $\Longleftrightarrow$ For every $N \geq 4$, there exists an $M$ making both $P$ and $Q$ prime.**
 
 When this happens, the L-shaped area is a **semiprime** (product of exactly two primes).
 
@@ -83,7 +83,7 @@ This transforms an arithmetic problem into a geometric search.
 
 For each $N$, define $D_N$ as the set of all valid $M$ values that create prime pairs:
 
-$$D_N = \\{M = \frac{Q - P}{2} \mid P, Q \text{ are prime, } 2 < P < N < Q < 2N\\}$$
+$$D_N = \left\\{M = \frac{Q - P}{2} \mid P, Q \text{ are prime, } 2 < P < N < Q < 2N\right\\}  \cap \\{1,\dots,N-3\\}$$
 
 **Question:** How many valid $M$ values exist for each $N$?
 
@@ -102,19 +102,19 @@ We computed $|D_N|$ for all $N$ from 4 to $2^{14}$ (16,384). Key findings:
 **Table 1: Minimum Gap Values Across Power-of-Two Intervals**
 
 | Interval | Range         | Min at $N$ | Min $G(N)$ |
-| -------- | ------------- | ---------- | ---------- |
-| 2        | [4, 8]        | 5          | 4.30       |
-| 3        | [8, 16]       | 11         | 7.55       |
-| 4        | [16, 32]      | 17         | 10.44      |
-| 5        | [32, 64]      | 61         | 14.08      |
-| 6        | [64, 128]     | 73         | 17.84      |
-| 7        | [128, 256]    | 151        | 20.61      |
-| 8        | [256, 512]    | 269        | 23.54      |
-| 9        | [512, 1024]   | 541        | 28.81      |
-| 10       | [1024, 2048]  | 1327       | 33.15      |
-| 11       | [2048, 4096]  | 2161       | 35.08      |
-| 12       | [4096, 8192]  | 7069       | 42.33      |
-| 13       | [8192, 16384] | 14138      | 44.06      |
+| :------- | :------------ | :--------- | :--------- |
+| 2        | $[4, 8]$      | 5          | 4.30       |
+| 3        | $[8, 16]$     | 9          | 7.36       |
+| 4        | $[16, 32]$    | 19         | 10.24      |
+| 5        | $[32, 64]$    | 61         | 14.08      |
+| 6        | $[64, 128]$   | 73         | 17.84      |
+| 7        | $[128, 256]$  | 151        | 20.61      |
+| 8        | $[256, 512]$  | 269        | 23.54      |
+| 9        | $[512, 1024]$ | 541        | 28.81      |
+| 10       | $[1024, 2048]$| 1327       | 33.15      |
+| 11       | $[2048, 4096]$| 2161       | 35.08      |
+| 12       | $[4096, 8192]$| 7069       | 42.33      |
+| 13       | $[8192, 16384]$| 14138     | 44.06      |
 
 **Key Observation:** $G(N) > 0$ always, and the minimum increases with each interval!
 
@@ -124,7 +124,7 @@ We computed $|D_N|$ for all $N$ from 4 to $2^{14}$ (16,384). Key findings:
 
 ### Main Result
 
-**Claim:** Our computational evidence strongly suggests that every even integer ≥ 8 is the sum of two distinct primes.
+**Claim:** Our computational evidence strongly suggests that every even integer $\geq 8$ is the sum of two distinct primes.
 
 ### Strategy
 
@@ -138,33 +138,33 @@ Now, for each prime $P \in [3, N-1]$, we get a candidate $M = N - P$. There are 
 
 **Pigeonhole Principle:** If we have more candidates than bad values, at least one candidate must be good!
 
-For $N ≥ 6$: $\pi(N) > \frac{N}{\log N + 2}$
+For $N \geq 6$: $\pi(N) > \frac{N}{\log N + 2}$
 
-For $N ≥ 328$: $\frac{N}{\log N + 2} > \log^2(2N)$
+For $N \geq 328$: $\frac{N}{\log N + 2} > \log^2(2N)$
 
-Therefore: **candidates > bad values** ⟹ at least one good $M$ exists!
+Therefore: **candidates > bad values** $\Longrightarrow$ at least one good $M$ exists!
 
 ### Base Cases
 
 For $N = 4$ to $12$, we verify directly (additional examples included for illustration):
 
-- **N=4** (2N=8): Candidates $P=3$; $M=1$. $D_4=\\{1, 2\\}$, so candidate good. Partition: $3+5$ ✓, $|D_4|=2$.
-- **N=5** (2N=10): Candidates $P=3$; $M=2$. $D_5=\\{2\\}$, so $M=2$ good ($P=3$). Partition: $3+7$ ✓, $|D_5|=1$.
-- **N=6** (2N=12): Candidates $P=3,5$; $M=\\{3,1\\}$. $D_6=\\{1,2,3,4\\}$, so all good. Partition: $5+7$ ✓, $|D_6|=4$.
-- **N=7** (2N=14): Candidates $P=3,5$; $M=\\{4,2\\}$. $D_7=\\{3,4,5\\}$, so $M=4$ good ($P=3$; $Q=11$ prime). Partition: $3+11$ ✓, $|D_7|=3$.
-- **N=8** (2N=16): Candidates $P=3,5,7$; $M=\\{5,3,1\\}$. $D_8=\\{2,3,4,5\\}$, so $M=3,5$ good ($P=5,3$; $Q=11,13$ prime). Partitions: $3+13$, $5+11$ ✓, $|D_8|=4$.
-- **N=9** (2N=18): Candidates $P=3,5,7$; $M=\\{6,4,2\\}$. $D_9=\\{2,3,4,5,6,7\\}$, so $M=2,4,6$ good ($P=7,5,3$). Partitions: $5+13$, $7+11$ ✓, $|D_9|=6$.
-- **N=10** (2N=20): Candidates $P=3,5,7$; $M=\\{7,5,3\\}$. $D_{10}=\\{2,3,4,5,6,7,8\\}$, so $M=3,5,7$ good ($P=7,5,3$). Partitions: $3+17$, $7+13$ ✓, $|D_{10}|=7$.
-- **N=11** (2N=22): Candidates $P=3,5,7$; $M=\\{8,6,4\\}$. $D_{11}=\\{3,4,5,6,7,8\\}$, so $M=4,6,8$ good ($P=7,5,3$). Partitions: $3+19$, $5+17$ ✓, $|D_{11}|=6$.
-- **N=12** (2N=24): Candidates $P=3,5,7,11$; $M=\\{9,7,5,1\\}$. $D_{12}=\\{1,3,4,5,6,7,8,9,10\\}$, so $M=1,5,7,9$ good ($P=11,7,5,3$). Partitions: $5+19$, $7+17$, $11+13$ ✓, $|D_{12}|=9$.
+* **$N=4$** ($2N=8$): $C_4 = \\{1\\}$ (from $P=3$). $D_4 = \\{1\\}$ (from pair $(3,5) $). Intersection: $\\{1\\}$. Partition: $8 = 3+5$. ✓
+* **$N=5$** ($2N=10$): $C_5 = \\{2\\}$ (from $P=3$). $D_5 = \\{2\\}$ (from $(3,7) $). Intersection: $\\{2\\}$. Partition: $10 = 3+7$. ✓
+* **$N=6$** ($2N=12$): $C_6 = \\{3,1\\}$ (from $P \in \\{3,5\\}$). $D_6 = \\{1,2,3\\}$ ($M=4$ excluded as $>3$). Intersection: $\\{1,3\\}$. Partition: $12 = 5+7$. ✓
+* **$N=7$** ($2N=14$): $C_7 = \\{4,2\\}$. $D_7 = \\{3,4\\}$ ($M=5$ excluded as $>4$). Intersection: $\\{4\\}$. Partition: $14 = 3+11$. ✓
+* **$N=8$** ($2N=16$): $C_8 = \\{5,3,1\\}$. $D_8 = \\{2,3,4,5\\}$. Intersection: $\\{3,5\\}$. Partition: $16 = 3+13$. ✓
+* **$N=9$** ($2N=18$): $C_9 = \\{6,4,2\\}$. $D_9 = \\{2,4\\}$. Intersection: $\\{2,4\\}$. Partition: $18 = 5+13$. ✓
+* **$N=10$** ($2N=20$): $C_{10} = \\{7,5,3\\}$. $D_{10} = \\{3,7\\}$. Intersection: $\\{3,7\\}$. Partition: $20 = 3+17$. ✓
+* **$N=11$** ($2N=22$): $C_{11} = \\{8,6,4\\}$. $D_{11} = \\{6,8\\}$. Intersection: $\\{6,8\\}$. Partition: $22 = 3+19$. ✓
+* **$N=12$** ($2N=24$): $C_{12} = \\{9,7,5,1\\}$. $D_{12} = \\{1,5,7\\}$. Intersection: $\\{1,5,7\\}$. Partition: $24 = 5+19$. ✓
 
-For $13 \le N \le 327$, the conjecture holds by direct computational verification (included in our analysis up to $N=2^{14}$).
+For $13 \leq N \leq 3274$, the conjecture holds by direct computational verification (included in our analysis up to $N=2^{14}$).
 
 ---
 
 ## 6. Conclusion
 
-We have demonstrated through computational and theoretical analysis that every even integer ≥ 8 is the sum of two distinct primes by:
+We have demonstrated through computational and theoretical analysis that every even integer $\geq 8$ is potentially the sum of two distinct primes by:
 
 1. **Establishing a geometric equivalence** with nested squares and semiprimes
 2. **Computing empirical bounds** on the number of valid configurations up to $N = 2^{14}$
@@ -183,4 +183,4 @@ The computational verification is available in this repository. Run `python expe
 ---
 
 ## Documentation
-Available as PDF at [Geometric Insights into the Goldbach Conjecture](https://www.preprints.org/manuscript/202511.0701/v4).
+Available as PDF at [Geometric Insights into the Goldbach Conjecture](https://www.preprints.org/manuscript/202511.0701/v5).
