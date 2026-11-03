@@ -275,4 +275,4 @@ The scripts were written with Claude (Claude Opus 5.5) and run by the author.
 
 ## Documentation
 
-Available as PDF at [Nested Squares and Distinct-Prime Goldbach Partitions](https://www.preprints.org/manuscript/202511.0701/v5).
+Available as PDF at [Nested Squares and Distinct-Prime Goldbach Partitions](https://www.preprints.org/manuscript/202511.0701).
