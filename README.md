@@ -1,4 +1,4 @@
-# Nested Squares and Distinct-Prime Goldbach Partitions
+# Experimental Results on Goldbach's Conjecture
 
 ![Goldbach partitions of the even integers.](docs/goldbach.png)
 
@@ -153,7 +153,7 @@ Further results for every $4 \leq N \leq 2^{14}$:
 | 11 | $\\{4,6,8\\}$   | $\\{3,4,5,6,7,8\\}$           | $\\{6,8\\}$     | $\\{4,6,8\\}$   | $22 = 3 + 19$ |
 | 12 | $\\{1,5,7,9\\}$ | $\\{1,3,4,5,6,7,8,9\\}$       | $\\{1,5,7\\}$   | $\\{1,5,7,9\\}$ | $24 = 5 + 19$ |
 
-### 5.2 `car/large_range.py` ($4 \leq N \leq 10^6$, 184.4 s)
+### 5.2 `large_range.py` ($4 \leq N \leq 10^6$, 184.4 s)
 
 **Table A: Coverage of $A_N$ by $E_N$**
 
@@ -250,9 +250,9 @@ The distinct-prime Goldbach conjecture is not proved here. For all large $N$, th
 ## Code and Data
 
 * `experiment.py` uses only the Python standard library. Run `python experiment.py` (default $N \leq 2^{14}$); it appends its output to `experimental_results.log`. The output of our run is in `experimental_results.txt`.
-* `car/large_range.py` uses Python and NumPy. Run `python car/large_range.py` (default $N \leq 10^6$; `--max-n` sets the range); it writes its output to `large_range_results.log`. The output of our run is in `large_range_results.txt`.
+* `large_range.py` uses Python and NumPy. Run `python large_range.py` (default $N \leq 10^6$; `--max-n` sets the range); it writes its output to `large_range_results.log`. The output of our run is in `large_range_results.txt`.
 
-**Requirements:** Python 3.10+ (Python 3.12 was used), NumPy for `car/large_range.py`.
+**Requirements:** Python 3.10+ (Python 3.12 was used), NumPy for `large_range.py`.
 
 The scripts were written with Claude (Claude Opus 5.5) and run by the author.
 

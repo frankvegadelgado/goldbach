@@ -37,7 +37,7 @@
     ></script>
   </head>
   <body>
-<h1>Nested Squares and Distinct-Prime Goldbach Partitions</h1>
+<h1>Experimental Results on Goldbach's Conjecture</h1>
 <p><img alt="Goldbach partitions of the even integers." src="goldbach.png" /></p>
 <p><strong>Author:</strong> Frank Vega<br />
 <strong>Institution:</strong> Information Physics Institute, Hialeah, FL, USA</p>
@@ -367,7 +367,7 @@
 </tr>
 </tbody>
 </table>
-<h3>5.2 <code>car/large_range.py</code> ($4 \leq N \leq 10^6$, 184.4 s)</h3>
+<h3>5.2 <code>large_range.py</code> ($4 \leq N \leq 10^6$, 184.4 s)</h3>
 <p><strong>Table A: Coverage of $A_N$ by $E_N$</strong></p>
 <table>
 <thead>
@@ -885,9 +885,9 @@
 <h2>Code and Data</h2>
 <ul>
 <li><code>experiment.py</code> uses only the Python standard library. Run <code>python experiment.py</code> (default $N \leq 2^{14}$); it appends its output to <code>experimental_results.log</code>. The output of our run is in <code>experimental_results.txt</code>.</li>
-<li><code>car/large_range.py</code> uses Python and NumPy. Run <code>python car/large_range.py</code> (default $N \leq 10^6$; <code>--max-n</code> sets the range); it writes its output to <code>large_range_results.log</code>. The output of our run is in <code>large_range_results.txt</code>.</li>
+<li><code>large_range.py</code> uses Python and NumPy. Run <code>python large_range.py</code> (default $N \leq 10^6$; <code>--max-n</code> sets the range); it writes its output to <code>large_range_results.log</code>. The output of our run is in <code>large_range_results.txt</code>.</li>
 </ul>
-<p><strong>Requirements:</strong> Python 3.10+ (Python 3.12 was used), NumPy for <code>car/large_range.py</code>.</p>
+<p><strong>Requirements:</strong> Python 3.10+ (Python 3.12 was used), NumPy for <code>large_range.py</code>.</p>
 <p>The scripts were written with Claude (Claude Opus 5.5) and run by the author.</p>
 <hr />
 <h2>References</h2>
