@@ -1,4 +1,4 @@
-# Nested Squares and Distinct-Prime Goldbach Partitions
+# Experimental Results on Goldbach's Conjecture
 
 ![Goldbach partitions of the even integers.](docs/goldbach.png)
 
