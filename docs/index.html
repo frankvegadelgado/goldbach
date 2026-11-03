@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Goldbach</title>
     <style>
       body {
@@ -12,9 +15,11 @@
         display: inline-block;
       }
       code.language-diff {
-        background-color: while;
+        background-color: white;
         color: green;
       }
+      table { border-collapse: collapse; margin: 1em 0; }
+      th, td { border: 1px solid #888; padding: 4px 8px; }
     </style>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -32,195 +37,874 @@
     ></script>
   </head>
   <body>
-<h1>Experimental Results on Goldbach's Conjecture</h1>
-<p><img src="goldbach.png" alt="Goldbach partitions of the even integers."></p>
-<p>This work builds upon <a href="https://hackmd.io/@frankvega/S1ABKPZ1Wl">Geometric Insights into the Goldbach Conjecture</a>.</p>
-<p><strong>Author:</strong> Frank Vega<br>
+<h1>Nested Squares and Distinct-Prime Goldbach Partitions</h1>
+<p><img alt="Goldbach partitions of the even integers." src="goldbach.png" /></p>
+<p><strong>Author:</strong> Frank Vega<br />
 <strong>Institution:</strong> Information Physics Institute, Hialeah, FL, USA</p>
-<p><strong>Keywords:</strong> Goldbach conjecture, geometric construction, semiprimes, pigeonhole principle</p>
-<hr>
+<p><strong>Keywords:</strong> Goldbach conjecture, differences of primes, additive energy, explicit sieve bounds, prime gaps, Cramér's conjecture, computational evidence</p>
+<hr />
 <h2>Abstract</h2>
-<p>The Goldbach conjecture states that every even integer greater than 2 is the sum of two primes. We present a computational approach that provides strong evidence for a variant: <strong>every even integer $\geq 8$ is the sum of two distinct primes</strong>.</p>
-<p>Our key insight is a geometric equivalence: this is true if and only if for every $N \geq 4$, there exists an integer $M$ such that the L-shaped region $N^2 - M^2$ between nested squares has a semiprime area $P \cdot Q$, where $P = N - M$ and $Q = N + M$ are both prime.</p>
-<p>Through computational analysis up to $N = 2^{14}$ and application of the pigeonhole principle, we demonstrate this variant holds for all $N \geq 4$ within our verified range and provide strong theoretical evidence for its general validity.</p>
-<hr>
-<h2>1. Introduction</h2>
-<p>The Goldbach conjecture is one of mathematics' oldest unsolved problems: can every even integer greater than 2 be expressed as the sum of two primes?</p>
-<p>We study a variant that excludes identical primes:</p>
+<p>The distinct-prime Goldbach conjecture asserts that for every $N \geq 4$ there is $M \in A_N = [1, N-3]$ with $N-M$ and $N+M$ both prime; geometrically, nested squares of side lengths $N$ and $M$ have an L-shaped difference of semiprime area $(N-M)(N+M)$. With $C_N$ and $D_N$ the sets of $M \in A_N$ for which $N-M$, respectively $N+M$, is prime, the conjecture for $2N$ is $C_N \cap D_N \neq \emptyset$. We embed this centered condition in a straddling one: $C_N \cap D_N$ lies in the set $E_N$ of half-differences $(Q-P)/2 \in A_N$ of primes $2 &lt; P &lt; N &lt; Q &lt; 2N$. From Mikawa's theorem on prime pairs with almost all differences we deduce $|A_N \setminus E_N| \ll_D N/(\log N)^D$ for every $D &gt; 0$, and with explicit constants we prove $|E_N| &gt; N/760$ for every $N \geq 3275$. Consequently, for all large $N$ and all but $O_D(N/(\log N)^D)$ primes $P &lt; N$, the number $2N - P$ becomes prime after adding the difference $P' - P$ of two primes $P' &lt; N$; Goldbach's partition is the case $P' = P$. In contrast, $|C_N \cap D_N| &lt; (N-3) - \log^2(2N)$ for every $N \geq 34$, and covering all but $\log^2(2N)$ values of $A_N$ for all large $N$ would imply the Cramér-type bound $p' - p &lt; 2\log^2(2p+2) + 2$. The method also shows that $2N$ is a sum of two distinct primes for more than $X/9600$ integers $N \leq X$, for every $X \geq 10^6$. Computations up to $N = 10^6$ compare the number of distinct-prime partitions with the Hardy–Littlewood prediction and measure the missing values of $E_N$ forced by prime gaps. The conjecture itself is not proved here.</p>
+<hr />
+<h2>1. The Problem</h2>
+<p>The Goldbach conjecture asserts that every even integer greater than 2 is the sum of two primes. We study the variant with <strong>distinct</strong> primes:</p>
 <blockquote>
-<p><strong>Variant:</strong> Every even integer $\geq 8$ is the sum of two <strong>distinct</strong> primes.</p>
+<p><strong>Distinct-prime Goldbach conjecture:</strong> every even integer $2N \geq 8$ is the sum of two distinct primes.</p>
 </blockquote>
-<p>This excludes $4 = 2 + 2$ and $6 = 3 + 3$ while preserving the essence of the original conjecture.</p>
-<p>We provide strong computational and theoretical evidence for this variant by connecting it to a surprising geometric property of nested squares.</p>
-<hr>
-<h2>2. The Geometric Connection</h2>
-<h3>Construction</h3>
+<p>This excludes only $4 = 2 + 2$ and $6 = 3 + 3$. For $N \geq 4$ it is equivalent to the existence of $M \geq 1$ with $N - M$ and $N + M$ both prime; this symmetric form is known (OEIS <a href="https://oeis.org/A082467">A082467</a>).</p>
+<p>The even Goldbach conjecture has been verified for all even integers up to $4 \cdot 10^{18}$ by Oliveira e Silva, Herzog and Pardi, and the least prime of a Goldbach partition of every such integer is at most $9781$. Together with our computation, this gives a partition into two <strong>distinct</strong> primes for every $8 \leq 2N \leq 4 \cdot 10^{18}$. The conjecture is therefore equivalent to its statement for $N &gt; 2 \cdot 10^{18}$.</p>
+<hr />
+<h2>2. The Geometric Form</h2>
 <p>Start with a square $S_N$ of side length $N \geq 4$. Inside it, place a smaller square $S_M$ of side length $M$ (where $1 \leq M \leq N-3$) sharing the same corner. The L-shaped region between them has area:</p>
 <p>$$N^2 - M^2 = (N - M)(N + M)$$</p>
-<p>Let $P = N - M$ and $Q = N + M$. Then:</p>
-<ul>
-<li>$P + Q = 2N$ (an even number)</li>
-<li>$P \cdot Q = N^2 - M^2$ (the L-shaped area)</li>
-<li>Both $P$ and $Q$ must be odd (same parity)</li>
-</ul>
-<h3>The Key Equivalence</h3>
-<p><strong>The Goldbach variant is true $\Longleftrightarrow$ For every $N \geq 4$, there exists an $M$ making both $P$ and $Q$ prime.</strong></p>
-<p>When this happens, the L-shaped area is a <strong>semiprime</strong> (product of exactly two primes).</p>
+<p>Let $P = N - M$ and $Q = N + M$. Then $P + Q = 2N$ and $P \cdot Q = N^2 - M^2$. Since $M \geq 1$ and $P \geq 3$, the numbers $P$ and $Q$ are distinct, and both must be odd to be prime.</p>
+<p><strong>$2N$ is the sum of two distinct primes $\Longleftrightarrow$ for some $M \in [1, N-3]$, both $P = N - M$ and $Q = N + M$ are prime $\Longleftrightarrow$ the L-shaped area is a semiprime for some $M \in [1, N-3]$.</strong></p>
 <div align="center">
    <img src="geometric.svg" alt="Geometric Construction" width="600">
    <br><br>
    <em><strong>Figure 1:</strong> The L-shaped region between nested squares. For N=5, M=2: P=3 and Q=7 (both prime), giving area 21 = 3×7 and sum 3+7=10.</em>
 </div>
-<hr>
-<h2>3. Why This Connection Matters</h2>
-<p>For any even number $2N$, finding a Goldbach partition means finding primes $P$ and $Q$ where $P + Q = 2N$.</p>
-<p>Geometrically, this is equivalent to finding an $M$ value such that:</p>
+
+<hr />
+<h2>3. Centered and Straddling Prime Pairs</h2>
+<p>Let $A_N = \{1, \dots, N-3\}$ and define</p>
+<p>$$C_N = \{M \in A_N : N - M \text{ is prime}\}, \qquad D_N = \{M \in A_N : N + M \text{ is prime}\}.$$</p>
+<p>Then $2N$ is the sum of two distinct primes if and only if $C_N \cap D_N \neq \emptyset$, and $R(2N) = |C_N \cap D_N|$ is the number of such partitions. An element $M \in C_N \cap D_N$ gives a prime pair $(N-M, N+M)$ <strong>centered</strong> at $N$.</p>
+<p>The <strong>half-difference set</strong> asks only for a prime pair that <strong>straddles</strong> $N$:</p>
+<p>$$E_N = \left\{\frac{Q - P}{2} \in A_N : P, Q \text{ prime},\ 2 &lt; P &lt; N &lt; Q &lt; 2N\right\}.$$</p>
+<p>Every centered pair straddles $N$, so $C_N \cap D_N \subseteq E_N$. The coverage statistic of $E_N$ is</p>
+<p>$$H(N) = \log^2(2N) - |A_N \setminus E_N| = \log^2(2N) - \bigl((N - 3) - |E_N|\bigr),$$</p>
+<p>where $\log$ is the natural logarithm.</p>
+<hr />
+<h2>4. Main Results</h2>
+<p><strong>(1) Coverage of $A_N$ by straddling pairs.</strong></p>
 <ul>
-<li>$P = N - M$ is prime</li>
-<li>$Q = N + M$ is prime</li>
-<li>The L-shaped area $P \cdot Q$ is a semiprime</li>
+<li>From Mikawa's theorem on the Hardy–Littlewood asymptotic for prime pairs with almost all differences: $|A_N \setminus E_N| \ll_D N/(\log N)^D$ for every $D &gt; 0$, so $|E_N| = N - o(N)$.</li>
+<li>With explicit constants: $|E_N| &gt; N/760$ for every $N \geq 3275$. The proof combines the Cauchy–Schwarz inequality, an exact identity for the additive energy of the primes below and above $N$, Siebert's explicit sieve bound, and the estimates of Dusart and of Rosser and Schoenfeld.</li>
 </ul>
-<p>This transforms an arithmetic problem into a geometric search.</p>
-<hr>
-<h2>4. Computational Evidence</h2>
-<h3>Defining the Set $D_N$</h3>
-<p>For each $N$, define $D_N$ as the set of all valid $M$ values that create prime pairs:</p>
-<p>$$D_N = \left\{M = \frac{Q - P}{2} \mid P, Q \text{ are prime, } 2 &lt; P &lt; N &lt; Q &lt; 2N\right\}  \cap \{1,\dots,N-3\}$$</p>
-<p><strong>Question:</strong> How many valid $M$ values exist for each $N$?</p>
-<h3>Gap Function</h3>
-<p>We define a &quot;gap function&quot;:</p>
-<p>$$G(N) = \log^2(2N) - ((N-3) - |D_N|)$$</p>
-<p>This measures how many &quot;bad&quot; $M$ values exist (those that don't produce prime pairs) compared to the logarithmic bound.</p>
-<h3>Experimental Results</h3>
-<p>We computed $|D_N|$ for all $N$ from 4 to $2^{14}$ (16,384). Key findings:</p>
-<p><strong>Table 1: Minimum Gap Values Across Power-of-Two Intervals</strong></p>
+<p><strong>(2) Goldbach partitions up to a difference of two primes.</strong></p>
+<ul>
+<li>For every $D &gt; 0$, $|C_N \cap E_N| = \pi(N-1) - 1 + O_D(N/(\log N)^D)$.</li>
+<li>Equivalently, for all but $O_D(N/(\log N)^D)$ primes $3 \leq P &lt; N$ there are primes $2 &lt; P' &lt; N &lt; Q' &lt; 2N$ with</li>
+</ul>
+<p>$$Q' = (2N - P) + (P' - P).$$</p>
+<ul>
+<li>A distinct-prime Goldbach partition $2N = P + Q'$ is the case $P' = P$.</li>
+<li>With explicit constants: if $H(N) &gt; 0$ and $N \geq 356$, then $C_N \cap E_N \neq \emptyset$.</li>
+</ul>
+<p><strong>(3) The centering step.</strong></p>
+<ul>
+<li>$|C_N \cap D_N| &lt; (N - 3) - \log^2(2N)$ for every $N \geq 34$, while $|E_N| = N - o(N)$.</li>
+<li>The prime gap around $N$ and the prime gap below $2N$ force missing values of $E_N$: if $p^- &lt; N &lt; p^+$ are consecutive primes, every $M &lt; (p^+ - p^-)/2$ is missing; if $q$ is the largest prime below $2N$, every $M &gt; (q - 3)/2$ is missing.</li>
+<li>Consequently, $H(N) &gt; 0$ for all large $N$ would imply $p' - p &lt; 2\log^2(2p + 2) + 2$ for consecutive primes $p &lt; p'$ (a Cramér-type bound), and the theorem of Ford, Green, Konyagin, Maynard and Tao on long prime gaps shows that $|A_N \setminus E_N|$ is unbounded.</li>
+</ul>
+<p><strong>(4) An explicit positive proportion of Goldbach numbers.</strong> For every $X \geq 10^6$, more than $X/9600$ integers $4 \leq N \leq X$ have $R(2N) \geq 1$.</p>
+<hr />
+<h2>5. Computational Results</h2>
+<p>Two scripts produce the data. Their output uses the names of an earlier notation: in the output of <code>experiment.py</code>, $D_N$ denotes $E_N$, $S_N$ denotes $C_N \cap D_N$, and $G(N)$ denotes $H(N)$. The intervals are $I_2 = [4, 8]$ and $I_m = (2^m, 2^{m+1}]$ for $m \geq 3$.</p>
+<h3>5.1 <code>experiment.py</code> ($4 \leq N \leq 2^{14}$, 18.7 s)</h3>
+<p><strong>Table 1: Minimum of $H(N)$ on each interval</strong></p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Interval</th>
-<th style="text-align:left">Range</th>
-<th style="text-align:left">Min at $N$</th>
-<th style="text-align:left">Min $G(N)$</th>
+<th style="text-align: left;">$m$</th>
+<th style="text-align: left;">Range $I_m$</th>
+<th style="text-align: left;">Min at $N$</th>
+<th style="text-align: left;">Min $H(N)$</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">2</td>
-<td style="text-align:left">$[4, 8]$</td>
-<td style="text-align:left">5</td>
-<td style="text-align:left">4.30</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">$[4, 8]$</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">4.301898</td>
 </tr>
 <tr>
-<td style="text-align:left">3</td>
-<td style="text-align:left">$[8, 16]$</td>
-<td style="text-align:left">9</td>
-<td style="text-align:left">7.36</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">$(2^3, 2^4]$</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">7.354249</td>
 </tr>
 <tr>
-<td style="text-align:left">4</td>
-<td style="text-align:left">$[16, 32]$</td>
-<td style="text-align:left">19</td>
-<td style="text-align:left">10.24</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">$(2^4, 2^5]$</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">10.232033</td>
 </tr>
 <tr>
-<td style="text-align:left">5</td>
-<td style="text-align:left">$[32, 64]$</td>
-<td style="text-align:left">61</td>
-<td style="text-align:left">14.08</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">$(2^5, 2^6]$</td>
+<td style="text-align: left;">61</td>
+<td style="text-align: left;">14.078618</td>
 </tr>
 <tr>
-<td style="text-align:left">6</td>
-<td style="text-align:left">$[64, 128]$</td>
-<td style="text-align:left">73</td>
-<td style="text-align:left">17.84</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">$(2^6, 2^7]$</td>
+<td style="text-align: left;">73</td>
+<td style="text-align: left;">17.836335</td>
 </tr>
 <tr>
-<td style="text-align:left">7</td>
-<td style="text-align:left">$[128, 256]$</td>
-<td style="text-align:left">151</td>
-<td style="text-align:left">20.61</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">$(2^7, 2^8]$</td>
+<td style="text-align: left;">151</td>
+<td style="text-align: left;">20.608977</td>
 </tr>
 <tr>
-<td style="text-align:left">8</td>
-<td style="text-align:left">$[256, 512]$</td>
-<td style="text-align:left">269</td>
-<td style="text-align:left">23.54</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">$(2^8, 2^9]$</td>
+<td style="text-align: left;">269</td>
+<td style="text-align: left;">23.537165</td>
 </tr>
 <tr>
-<td style="text-align:left">9</td>
-<td style="text-align:left">$[512, 1024]$</td>
-<td style="text-align:left">541</td>
-<td style="text-align:left">28.81</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">$(2^9, 2^{10}]$</td>
+<td style="text-align: left;">541</td>
+<td style="text-align: left;">28.812111</td>
 </tr>
 <tr>
-<td style="text-align:left">10</td>
-<td style="text-align:left">$[1024, 2048]$</td>
-<td style="text-align:left">1327</td>
-<td style="text-align:left">33.15</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">$(2^{10}, 2^{11}]$</td>
+<td style="text-align: left;">1327</td>
+<td style="text-align: left;">33.154668</td>
 </tr>
 <tr>
-<td style="text-align:left">11</td>
-<td style="text-align:left">$[2048, 4096]$</td>
-<td style="text-align:left">2161</td>
-<td style="text-align:left">35.08</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">$(2^{11}, 2^{12}]$</td>
+<td style="text-align: left;">2161</td>
+<td style="text-align: left;">35.081569</td>
 </tr>
 <tr>
-<td style="text-align:left">12</td>
-<td style="text-align:left">$[4096, 8192]$</td>
-<td style="text-align:left">7069</td>
-<td style="text-align:left">42.33</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">$(2^{12}, 2^{13}]$</td>
+<td style="text-align: left;">7069</td>
+<td style="text-align: left;">42.329014</td>
 </tr>
 <tr>
-<td style="text-align:left">13</td>
-<td style="text-align:left">$[8192, 16384]$</td>
-<td style="text-align:left">14138</td>
-<td style="text-align:left">44.06</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">$(2^{13}, 2^{14}]$</td>
+<td style="text-align: left;">14138</td>
+<td style="text-align: left;">44.057758</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Key Observation:</strong> $G(N) &gt; 0$ always, and the minimum increases with each interval!</p>
-<hr>
-<h2>5. Theoretical Framework and Evidence</h2>
-<h3>Main Result</h3>
-<p><strong>Claim:</strong> Our computational evidence strongly suggests that every even integer $\geq 8$ is the sum of two distinct primes.</p>
-<h3>Strategy</h3>
-<p>The computational data shows that $G(N) &gt; 0$, which means:</p>
-<p>$$|D_N| &gt; (N-3) - \log^2(2N)$$</p>
-<p>In other words, the number of &quot;bad&quot; $M$ values is less than $\log^2(2N)$.</p>
-<p>Now, for each prime $P \in [3, N-1]$, we get a candidate $M = N - P$. There are $\pi(N-1) - 1$ such candidates (where $\pi$ counts primes).</p>
-<p><strong>Pigeonhole Principle:</strong> If we have more candidates than bad values, at least one candidate must be good!</p>
-<p>For $N \geq 6$: $\pi(N) &gt; \frac{N}{\log N + 2}$</p>
-<p>For $N \geq 328$: $\frac{N}{\log N + 2} &gt; \log^2(2N)$</p>
-<p>Therefore: <strong>candidates &gt; bad values</strong> $\Longrightarrow$ at least one good $M$ exists!</p>
-<h3>Base Cases</h3>
-<p>For $N = 4$ to $12$, we verify directly (additional examples included for illustration):</p>
+<p><strong>Table 2: Minimum of the centered statistic $H_R(N) = \log^2(2N) - ((N-3) - R(2N))$</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">$m$</th>
+<th style="text-align: left;">Range $I_m$</th>
+<th style="text-align: left;">Min at $N$</th>
+<th style="text-align: left;">Min $H_R(N)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">$[4, 8]$</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">3.96</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">$(2^3, 2^4]$</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">1.01</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">$(2^4, 2^5]$</td>
+<td style="text-align: left;">31</td>
+<td style="text-align: left;">−8.97</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">$(2^5, 2^6]$</td>
+<td style="text-align: left;">64</td>
+<td style="text-align: left;">−34.46</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">$(2^6, 2^7]$</td>
+<td style="text-align: left;">128</td>
+<td style="text-align: left;">−86.25</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">$(2^7, 2^8]$</td>
+<td style="text-align: left;">256</td>
+<td style="text-align: left;">−203.08</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">$(2^8, 2^9]$</td>
+<td style="text-align: left;">511</td>
+<td style="text-align: left;">−441.98</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">$(2^9, 2^{10}]$</td>
+<td style="text-align: left;">1024</td>
+<td style="text-align: left;">−937.87</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">$(2^{10}, 2^{11}]$</td>
+<td style="text-align: left;">2047</td>
+<td style="text-align: left;">−1923.82</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">$(2^{11}, 2^{12}]$</td>
+<td style="text-align: left;">4096</td>
+<td style="text-align: left;">−3935.80</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">$(2^{12}, 2^{13}]$</td>
+<td style="text-align: left;">8191</td>
+<td style="text-align: left;">−7953.83</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">$(2^{13}, 2^{14}]$</td>
+<td style="text-align: left;">16369</td>
+<td style="text-align: left;">−16029.92</td>
+</tr>
+</tbody>
+</table>
+<p>Further results for every $4 \leq N \leq 2^{14}$:</p>
 <ul>
-<li><strong>$N=4$</strong> ($2N=8$): $C_4 = \{1\}$ (from $P=3$). $D_4 = \{1\}$ (from pair $(3,5) $). Intersection: $\{1\}$. Partition: $8 = 3+5$. ✓</li>
-<li><strong>$N=5$</strong> ($2N=10$): $C_5 = \{2\}$ (from $P=3$). $D_5 = \{2\}$ (from $(3,7) $). Intersection: $\{2\}$. Partition: $10 = 3+7$. ✓</li>
-<li><strong>$N=6$</strong> ($2N=12$): $C_6 = \{3,1\}$ (from $P \in \{3,5\}$). $D_6 = \{1,2,3\}$ ($M=4$ excluded as $&gt;3$). Intersection: $\{1,3\}$. Partition: $12 = 5+7$. ✓</li>
-<li><strong>$N=7$</strong> ($2N=14$): $C_7 = \{4,2\}$. $D_7 = \{3,4\}$ ($M=5$ excluded as $&gt;4$). Intersection: $\{4\}$. Partition: $14 = 3+11$. ✓</li>
-<li><strong>$N=8$</strong> ($2N=16$): $C_8 = \{5,3,1\}$. $D_8 = \{2,3,4,5\}$. Intersection: $\{3,5\}$. Partition: $16 = 3+13$. ✓</li>
-<li><strong>$N=9$</strong> ($2N=18$): $C_9 = \{6,4,2\}$. $D_9 = \{2,4\}$. Intersection: $\{2,4\}$. Partition: $18 = 5+13$. ✓</li>
-<li><strong>$N=10$</strong> ($2N=20$): $C_{10} = \{7,5,3\}$. $D_{10} = \{3,7\}$. Intersection: $\{3,7\}$. Partition: $20 = 3+17$. ✓</li>
-<li><strong>$N=11$</strong> ($2N=22$): $C_{11} = \{8,6,4\}$. $D_{11} = \{6,8\}$. Intersection: $\{6,8\}$. Partition: $22 = 3+19$. ✓</li>
-<li><strong>$N=12$</strong> ($2N=24$): $C_{12} = \{9,7,5,1\}$. $D_{12} = \{1,5,7\}$. Intersection: $\{1,5,7\}$. Partition: $24 = 5+19$. ✓</li>
+<li>$R(2N) \geq 1$: every even integer $8 \leq 2N \leq 2^{15}$ is the sum of two distinct primes.</li>
+<li>The pigeonhole count $|C_N| &gt; |A_N \setminus E_N|$ holds for every $N$ except $N = 5$ and $N = 7$.</li>
+<li>$(C_N \cap E_N) \setminus D_N \neq \emptyset$ for $16{,}377$ of the $16{,}381$ values of $N$, all except $N \in \{4, 5, 7, 8\}$; for instance, $3 \in C_6 \cap E_6$ while $6 + 3 = 9$ is composite.</li>
+<li>The inequality $N/(\log N + 2) - 2 &gt; \log^2(2N)$ fails at $N = 355$ and holds for every $356 \leq N \leq 10^6$; it is proved for every real $N \geq 356$ in the paper.</li>
 </ul>
-<p>For $13 \leq N \leq 3274$, the conjecture holds by direct computational verification (included in our analysis up to $N=2^{14}$).</p>
-<hr>
-<h2>6. Conclusion</h2>
-<p>We have demonstrated through computational and theoretical analysis that every even integer $\geq 8$ is potentially the sum of two distinct primes by:</p>
-<ol>
-<li><strong>Establishing a geometric equivalence</strong> with nested squares and semiprimes</li>
-<li><strong>Computing empirical bounds</strong> on the number of valid configurations up to $N = 2^{14}$</li>
-<li><strong>Applying the pigeonhole principle</strong> to provide strong theoretical evidence that at least one solution exists for all $N$</li>
-</ol>
-<p>This demonstrates how geometric thinking and computational data can combine with classical combinatorial principles to provide compelling evidence for number-theoretic claims.</p>
-<hr>
+<p><strong>Small cases:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">$N$</th>
+<th style="text-align: left;">$C_N$</th>
+<th style="text-align: left;">$E_N$</th>
+<th style="text-align: left;">$C_N \cap D_N$</th>
+<th style="text-align: left;">$C_N \cap E_N$</th>
+<th style="text-align: left;">Partition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">$\{1\}$</td>
+<td style="text-align: left;">$\{1\}$</td>
+<td style="text-align: left;">$\{1\}$</td>
+<td style="text-align: left;">$\{1\}$</td>
+<td style="text-align: left;">$8 = 3 + 5$</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">$\{2\}$</td>
+<td style="text-align: left;">$\{2\}$</td>
+<td style="text-align: left;">$\{2\}$</td>
+<td style="text-align: left;">$\{2\}$</td>
+<td style="text-align: left;">$10 = 3 + 7$</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">$\{1,3\}$</td>
+<td style="text-align: left;">$\{1,2,3\}$</td>
+<td style="text-align: left;">$\{1\}$</td>
+<td style="text-align: left;">$\{1,3\}$</td>
+<td style="text-align: left;">$12 = 5 + 7$</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">$\{2,4\}$</td>
+<td style="text-align: left;">$\{3,4\}$</td>
+<td style="text-align: left;">$\{4\}$</td>
+<td style="text-align: left;">$\{4\}$</td>
+<td style="text-align: left;">$14 = 3 + 11$</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">$\{1,3,5\}$</td>
+<td style="text-align: left;">$\{2,3,4,5\}$</td>
+<td style="text-align: left;">$\{3,5\}$</td>
+<td style="text-align: left;">$\{3,5\}$</td>
+<td style="text-align: left;">$16 = 3 + 13$</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">$\{2,4,6\}$</td>
+<td style="text-align: left;">$\{2,3,4,5,6\}$</td>
+<td style="text-align: left;">$\{2,4\}$</td>
+<td style="text-align: left;">$\{2,4,6\}$</td>
+<td style="text-align: left;">$18 = 5 + 13$</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">$\{3,5,7\}$</td>
+<td style="text-align: left;">$\{2,3,4,5,6,7\}$</td>
+<td style="text-align: left;">$\{3,7\}$</td>
+<td style="text-align: left;">$\{3,5,7\}$</td>
+<td style="text-align: left;">$20 = 3 + 17$</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">$\{4,6,8\}$</td>
+<td style="text-align: left;">$\{3,4,5,6,7,8\}$</td>
+<td style="text-align: left;">$\{6,8\}$</td>
+<td style="text-align: left;">$\{4,6,8\}$</td>
+<td style="text-align: left;">$22 = 3 + 19$</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">$\{1,5,7,9\}$</td>
+<td style="text-align: left;">$\{1,3,4,5,6,7,8,9\}$</td>
+<td style="text-align: left;">$\{1,5,7\}$</td>
+<td style="text-align: left;">$\{1,5,7,9\}$</td>
+<td style="text-align: left;">$24 = 5 + 19$</td>
+</tr>
+</tbody>
+</table>
+<h3>5.2 <code>car/large_range.py</code> ($4 \leq N \leq 10^6$, 184.4 s)</h3>
+<p><strong>Table A: Coverage of $A_N$ by $E_N$</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">$m$</th>
+<th style="text-align: left;">Range $I_m$</th>
+<th style="text-align: left;">Min at $N$</th>
+<th style="text-align: left;">Min $H(N)$</th>
+<th style="text-align: left;">Max $|A_N \setminus E_N|$ (at $N$)</th>
+<th style="text-align: left;">Min $|E_N|/N$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">$[4, 8]$</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">4.301898</td>
+<td style="text-align: left;">2 (7)</td>
+<td style="text-align: left;">0.200000</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">$(2^3, 2^4]$</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">7.354249</td>
+<td style="text-align: left;">2 (11)</td>
+<td style="text-align: left;">0.545455</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">$(2^4, 2^5]$</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">10.232033</td>
+<td style="text-align: left;">6 (29)</td>
+<td style="text-align: left;">0.684211</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">$(2^5, 2^6]$</td>
+<td style="text-align: left;">61</td>
+<td style="text-align: left;">14.078618</td>
+<td style="text-align: left;">9 (61)</td>
+<td style="text-align: left;">0.803279</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">$(2^6, 2^7]$</td>
+<td style="text-align: left;">73</td>
+<td style="text-align: left;">17.836335</td>
+<td style="text-align: left;">10 (113)</td>
+<td style="text-align: left;">0.863014</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">$(2^7, 2^8]$</td>
+<td style="text-align: left;">151</td>
+<td style="text-align: left;">20.608977</td>
+<td style="text-align: left;">13 (165)</td>
+<td style="text-align: left;">0.900662</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">$(2^8, 2^9]$</td>
+<td style="text-align: left;">269</td>
+<td style="text-align: left;">23.537165</td>
+<td style="text-align: left;">16 (269)</td>
+<td style="text-align: left;">0.929368</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">$(2^9, 2^{10}]$</td>
+<td style="text-align: left;">541</td>
+<td style="text-align: left;">28.812111</td>
+<td style="text-align: left;">24 (986)</td>
+<td style="text-align: left;">0.957486</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">$(2^{10}, 2^{11}]$</td>
+<td style="text-align: left;">1327</td>
+<td style="text-align: left;">33.154668</td>
+<td style="text-align: left;">29 (1327)</td>
+<td style="text-align: left;">0.975377</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">$(2^{11}, 2^{12}]$</td>
+<td style="text-align: left;">2161</td>
+<td style="text-align: left;">35.081569</td>
+<td style="text-align: left;">35 (2161)</td>
+<td style="text-align: left;">0.982416</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">$(2^{12}, 2^{13}]$</td>
+<td style="text-align: left;">7069</td>
+<td style="text-align: left;">42.329014</td>
+<td style="text-align: left;">49 (7069)</td>
+<td style="text-align: left;">0.991389</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">$(2^{13}, 2^{14}]$</td>
+<td style="text-align: left;">14138</td>
+<td style="text-align: left;">44.057758</td>
+<td style="text-align: left;">61 (14138)</td>
+<td style="text-align: left;">0.994665</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">$(2^{14}, 2^{15}]$</td>
+<td style="text-align: left;">17863</td>
+<td style="text-align: left;">46.906582</td>
+<td style="text-align: left;">64 (29443)</td>
+<td style="text-align: left;">0.996305</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">$(2^{15}, 2^{16}]$</td>
+<td style="text-align: left;">43331</td>
+<td style="text-align: left;">55.271687</td>
+<td style="text-align: left;">74 (43331)</td>
+<td style="text-align: left;">0.998006</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">$(2^{16}, 2^{17}]$</td>
+<td style="text-align: left;">66239</td>
+<td style="text-align: left;">58.102490</td>
+<td style="text-align: left;">90 (107525)</td>
+<td style="text-align: left;">0.998732</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">$(2^{17}, 2^{18}]$</td>
+<td style="text-align: left;">206699</td>
+<td style="text-align: left;">54.240920</td>
+<td style="text-align: left;">113 (206699)</td>
+<td style="text-align: left;">0.999315</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">$(2^{18}, 2^{19}]$</td>
+<td style="text-align: left;">484853</td>
+<td style="text-align: left;">55.019283</td>
+<td style="text-align: left;">135 (484853)</td>
+<td style="text-align: left;">0.999576</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">$(2^{19}, 2^{20}]$</td>
+<td style="text-align: left;">668364</td>
+<td style="text-align: left;">58.971771</td>
+<td style="text-align: left;">140 (668364)</td>
+<td style="text-align: left;">0.999749</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>$H(N) &gt; 0$ for every $4 \leq N \leq 10^6$; on $I_2, \dots, I_{13}$ the minima coincide with Table 1.</li>
+<li>The minimum of $H(N)$ strictly increases for $2 \leq m \leq 16$; the minimum on $I_{17}$ is smaller than on $I_{16}$, and the minima increase again from $I_{17}$ to $I_{19}$.</li>
+<li>The minimum of $|E_N|/N$ over $3275 \leq N \leq 10^6$ is $0.990603$.</li>
+<li>For $N = 1327$, the missing values are $M = 1, \dots, 19, 22, 25, 28, 34, 43, 50, 1316, 1319, 1323, 1324$. The primes around $1327$ are $1321$ and $1361$, which force $M = 1, \dots, 19$; the largest prime below $2654$ is $2647$, which forces $M = 1323, 1324$.</li>
+</ul>
+<p><strong>Table B: Distinct-prime partitions and the Hardy–Littlewood prediction</strong></p>
+<p>Here $\mathrm{HL}(2N) = \omega \prod_{p \mid N,\ p &gt; 2} \frac{p-1}{p-2} \int_2^{2N-2} \frac{dt}{\log t \, \log(2N - t)}$, with $\omega \approx 0.6601618372$ and the integral computed by 64-point Gauss–Legendre quadrature.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">$m$</th>
+<th style="text-align: left;">Range $I_m$</th>
+<th style="text-align: left;">Min $R(2N)$ (at $N$)</th>
+<th style="text-align: left;">Min ratio</th>
+<th style="text-align: left;">Max ratio</th>
+<th style="text-align: left;">Mean ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">$[4, 8]$</td>
+<td style="text-align: left;">1 (4)</td>
+<td style="text-align: left;">0.2497</td>
+<td style="text-align: left;">0.8705</td>
+<td style="text-align: left;">0.5112</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">$(2^3, 2^4]$</td>
+<td style="text-align: left;">2 (9)</td>
+<td style="text-align: left;">0.3711</td>
+<td style="text-align: left;">0.6800</td>
+<td style="text-align: left;">0.5565</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">$(2^4, 2^5]$</td>
+<td style="text-align: left;">1 (19)</td>
+<td style="text-align: left;">0.2806</td>
+<td style="text-align: left;">1.1702</td>
+<td style="text-align: left;">0.6706</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">$(2^5, 2^6]$</td>
+<td style="text-align: left;">2 (34)</td>
+<td style="text-align: left;">0.4264</td>
+<td style="text-align: left;">1.0380</td>
+<td style="text-align: left;">0.7407</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">$(2^6, 2^7]$</td>
+<td style="text-align: left;">4 (76)</td>
+<td style="text-align: left;">0.5738</td>
+<td style="text-align: left;">1.0863</td>
+<td style="text-align: left;">0.7970</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">$(2^7, 2^8]$</td>
+<td style="text-align: left;">6 (139)</td>
+<td style="text-align: left;">0.5280</td>
+<td style="text-align: left;">1.0909</td>
+<td style="text-align: left;">0.8530</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">$(2^8, 2^9]$</td>
+<td style="text-align: left;">9 (271)</td>
+<td style="text-align: left;">0.6300</td>
+<td style="text-align: left;">1.1322</td>
+<td style="text-align: left;">0.8890</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">$(2^9, 2^{10}]$</td>
+<td style="text-align: left;">16 (556)</td>
+<td style="text-align: left;">0.6960</td>
+<td style="text-align: left;">1.1621</td>
+<td style="text-align: left;">0.9258</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">$(2^{10}, 2^{11}]$</td>
+<td style="text-align: left;">26 (1039)</td>
+<td style="text-align: left;">0.7159</td>
+<td style="text-align: left;">1.1448</td>
+<td style="text-align: left;">0.9463</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">$(2^{11}, 2^{12}]$</td>
+<td style="text-align: left;">45 (2104)</td>
+<td style="text-align: left;">0.7833</td>
+<td style="text-align: left;">1.1361</td>
+<td style="text-align: left;">0.9624</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">$(2^{12}, 2^{13}]$</td>
+<td style="text-align: left;">75 (4276)</td>
+<td style="text-align: left;">0.7754</td>
+<td style="text-align: left;">1.1131</td>
+<td style="text-align: left;">0.9750</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">$(2^{13}, 2^{14}]$</td>
+<td style="text-align: left;">131 (8311)</td>
+<td style="text-align: left;">0.8673</td>
+<td style="text-align: left;">1.1129</td>
+<td style="text-align: left;">0.9820</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">$(2^{14}, 2^{15}]$</td>
+<td style="text-align: left;">222 (16519)</td>
+<td style="text-align: left;">0.8807</td>
+<td style="text-align: left;">1.0906</td>
+<td style="text-align: left;">0.9887</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">$(2^{15}, 2^{16}]$</td>
+<td style="text-align: left;">406 (32789)</td>
+<td style="text-align: left;">0.9093</td>
+<td style="text-align: left;">1.0711</td>
+<td style="text-align: left;">0.9918</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">$(2^{16}, 2^{17}]$</td>
+<td style="text-align: left;">707 (65551)</td>
+<td style="text-align: left;">0.9181</td>
+<td style="text-align: left;">1.0570</td>
+<td style="text-align: left;">0.9946</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">$(2^{17}, 2^{18}]$</td>
+<td style="text-align: left;">1279 (132274)</td>
+<td style="text-align: left;">0.9424</td>
+<td style="text-align: left;">1.0529</td>
+<td style="text-align: left;">0.9962</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">$(2^{18}, 2^{19}]$</td>
+<td style="text-align: left;">2291 (262436)</td>
+<td style="text-align: left;">0.9536</td>
+<td style="text-align: left;">1.0385</td>
+<td style="text-align: left;">0.9975</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">$(2^{19}, 2^{20}]$</td>
+<td style="text-align: left;">4130 (525166)</td>
+<td style="text-align: left;">0.9657</td>
+<td style="text-align: left;">1.0296</td>
+<td style="text-align: left;">0.9982</td>
+</tr>
+</tbody>
+</table>
+<p>$R(2N) \geq 1$ for every $4 \leq N \leq 10^6$: every even integer $8 \leq 2N \leq 2 \cdot 10^6$ is the sum of two distinct primes.</p>
+<p><strong>Table C: Missing values of $E_N$ forced by prime gaps</strong></p>
+<p>$F(N)$ is the number of missing values forced by the two gap obstructions of Section 4 (3), and $U(N) = |A_N \setminus E_N| - F(N)$.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">$m$</th>
+<th style="text-align: left;">Range $I_m$</th>
+<th style="text-align: left;">Max $|A_N \setminus E_N|$</th>
+<th style="text-align: left;">Max $F(N)$</th>
+<th style="text-align: left;">Max $U(N)$ (at $N$)</th>
+<th style="text-align: left;">Mean $U(N)$</th>
+<th style="text-align: left;">Share forced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">$[4, 8]$</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0 (4)</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: left;">1.0000</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">$(2^3, 2^4]$</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1 (12)</td>
+<td style="text-align: left;">0.125</td>
+<td style="text-align: left;">0.9091</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">$(2^4, 2^5]$</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">4 (30)</td>
+<td style="text-align: left;">0.812</td>
+<td style="text-align: left;">0.7111</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">$(2^5, 2^6]$</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">5 (60)</td>
+<td style="text-align: left;">1.375</td>
+<td style="text-align: left;">0.6562</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">$(2^6, 2^7]$</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">6 (128)</td>
+<td style="text-align: left;">2.125</td>
+<td style="text-align: left;">0.6344</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">$(2^7, 2^8]$</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">9 (166)</td>
+<td style="text-align: left;">3.555</td>
+<td style="text-align: left;">0.5221</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">$(2^8, 2^9]$</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">9 (311)</td>
+<td style="text-align: left;">4.648</td>
+<td style="text-align: left;">0.4868</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">$(2^9, 2^{10}]$</td>
+<td style="text-align: left;">24</td>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">15 (702)</td>
+<td style="text-align: left;">7.020</td>
+<td style="text-align: left;">0.4439</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">$(2^{10}, 2^{11}]$</td>
+<td style="text-align: left;">29</td>
+<td style="text-align: left;">21</td>
+<td style="text-align: left;">20 (1373)</td>
+<td style="text-align: left;">8.673</td>
+<td style="text-align: left;">0.4420</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">$(2^{11}, 2^{12}]$</td>
+<td style="text-align: left;">35</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">26 (3083)</td>
+<td style="text-align: left;">10.956</td>
+<td style="text-align: left;">0.4092</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">$(2^{12}, 2^{13}]$</td>
+<td style="text-align: left;">49</td>
+<td style="text-align: left;">27</td>
+<td style="text-align: left;">35 (7072)</td>
+<td style="text-align: left;">14.507</td>
+<td style="text-align: left;">0.3706</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">$(2^{13}, 2^{14}]$</td>
+<td style="text-align: left;">61</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">42 (14249)</td>
+<td style="text-align: left;">16.576</td>
+<td style="text-align: left;">0.3619</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">$(2^{14}, 2^{15}]$</td>
+<td style="text-align: left;">64</td>
+<td style="text-align: left;">45</td>
+<td style="text-align: left;">51 (24683)</td>
+<td style="text-align: left;">20.686</td>
+<td style="text-align: left;">0.3350</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">$(2^{15}, 2^{16}]$</td>
+<td style="text-align: left;">74</td>
+<td style="text-align: left;">52</td>
+<td style="text-align: left;">57 (63199)</td>
+<td style="text-align: left;">23.915</td>
+<td style="text-align: left;">0.3218</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">$(2^{16}, 2^{17}]$</td>
+<td style="text-align: left;">90</td>
+<td style="text-align: left;">53</td>
+<td style="text-align: left;">69 (107449)</td>
+<td style="text-align: left;">27.847</td>
+<td style="text-align: left;">0.3072</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">$(2^{17}, 2^{18}]$</td>
+<td style="text-align: left;">113</td>
+<td style="text-align: left;">69</td>
+<td style="text-align: left;">90 (250433)</td>
+<td style="text-align: left;">32.279</td>
+<td style="text-align: left;">0.2922</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">$(2^{18}, 2^{19}]$</td>
+<td style="text-align: left;">135</td>
+<td style="text-align: left;">83</td>
+<td style="text-align: left;">119 (484857)</td>
+<td style="text-align: left;">36.733</td>
+<td style="text-align: left;">0.2803</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">$(2^{19}, 2^{20}]$</td>
+<td style="text-align: left;">140</td>
+<td style="text-align: left;">93</td>
+<td style="text-align: left;">115 (854722)</td>
+<td style="text-align: left;">41.545</td>
+<td style="text-align: left;">0.2698</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>$F(N) \leq |A_N \setminus E_N|$ for every $4 \leq N \leq 10^6$ (consistency check).</li>
+<li>The share of forced missing values strictly decreases from $1$ on $I_2$ to $0.2698$ on $I_{19}$, and the mean of $U(N)$ increases from $0$ to $41.545$.</li>
+<li>No $N \leq 10^6$ has $F(N) \geq \log^2(2N)$ or $U(N) &gt; \log^2(2N)$; the largest value of $U(N)/\log^2(2N)$ over $1000 \leq N \leq 10^6$ is $0.6263$, at $N = 484857$.</li>
+</ul>
+<hr />
+<h2>6. Status</h2>
+<p>The distinct-prime Goldbach conjecture is not proved here. For all large $N$, the set $C_N \cap E_N$ contains all but $O_D(N/(\log N)^D)$ elements of $C_N$, and $C_N \cap D_N$ is the subset of those $M$ for which the centered pair $(N - M, N + M)$ realizes the half-difference $M$. The conjecture requires one such $M$ for every $N &gt; 2 \cdot 10^{18}$.</p>
+<hr />
 <h2>Code and Data</h2>
-<p>The computational verification is available in this repository. Run <code>python experiment.py</code> to reproduce the results in Table 1.</p>
-<p><strong>Requirements:</strong> Python 3.12+, gmpy2 library</p>
-<hr>
+<ul>
+<li><code>experiment.py</code> uses only the Python standard library. Run <code>python experiment.py</code> (default $N \leq 2^{14}$); it appends its output to <code>experimental_results.log</code>. The output of our run is in <code>experimental_results.txt</code>.</li>
+<li><code>car/large_range.py</code> uses Python and NumPy. Run <code>python car/large_range.py</code> (default $N \leq 10^6$; <code>--max-n</code> sets the range); it writes its output to <code>large_range_results.log</code>. The output of our run is in <code>large_range_results.txt</code>.</li>
+</ul>
+<p><strong>Requirements:</strong> Python 3.10+ (Python 3.12 was used), NumPy for <code>car/large_range.py</code>.</p>
+<p>The scripts were written with Claude (Claude Opus 5.5) and run by the author.</p>
+<hr />
+<h2>References</h2>
+<ul>
+<li>T. Oliveira e Silva, S. Herzog, S. Pardi, <em>Empirical verification of the even Goldbach conjecture and computation of prime gaps up to $4 \cdot 10^{18}$</em>, Math. Comp. 83 (2014), 2033–2060. <a href="https://doi.org/10.1090/S0025-5718-2013-02787-1">doi:10.1090/S0025-5718-2013-02787-1</a></li>
+<li>T. Oliveira e Silva, <em>Goldbach conjecture verification</em>. <a href="https://sweet.ua.pt/tos/goldbach.html">sweet.ua.pt/tos/goldbach.html</a></li>
+<li>H. Mikawa, <em>On prime twins</em>, Tsukuba J. Math. 15 (1991), 19–29. <a href="https://doi.org/10.21099/tkbjm/1496161564">doi:10.21099/tkbjm/1496161564</a></li>
+<li>D. Wolke, <em>Über das Primzahl-Zwillingsproblem</em>, Math. Ann. 283 (1989), 529–537. <a href="https://doi.org/10.1007/BF01442852">doi:10.1007/BF01442852</a></li>
+<li>A. Perelli, J. Pintz, <em>On the exceptional set for the $2k$-twin primes problem</em>, Compositio Math. 82 (1992), 355–372.</li>
+<li>K. Matomäki, M. Radziwiłł, T. Tao, <em>Correlations of the von Mangoldt and higher divisor functions I. Long shift ranges</em>, Proc. London Math. Soc. 118 (2019), 284–350.</li>
+<li>H. Siebert, <em>Montgomery's weighted sieve for dimension two</em>, Monatsh. Math. 82 (1976), 327–336. <a href="https://doi.org/10.1007/BF01540603">doi:10.1007/BF01540603</a></li>
+<li>H. L. Montgomery, R. C. Vaughan, <em>The exceptional set in Goldbach's problem</em>, Acta Arith. 27 (1975), 353–370. <a href="https://doi.org/10.4064/aa-27-1-353-370">doi:10.4064/aa-27-1-353-370</a></li>
+<li>K. Ford, B. Green, S. Konyagin, J. Maynard, T. Tao, <em>Long gaps between primes</em>, J. Amer. Math. Soc. 31 (2018), 65–105. <a href="https://doi.org/10.1090/jams/876">doi:10.1090/jams/876</a></li>
+<li>H. Cramér, <em>On the order of magnitude of the difference between consecutive prime numbers</em>, Acta Arith. 2 (1936), 23–46. <a href="https://doi.org/10.4064/aa-2-1-23-46">doi:10.4064/aa-2-1-23-46</a></li>
+</ul>
+<hr />
 <h2>Documentation</h2>
-<p>Available as PDF at <a href="https://www.preprints.org/manuscript/202511.0701/v5">Geometric Insights into the Goldbach Conjecture</a>.</p>
-</body>
+<p>Available as PDF at <a href="https://www.preprints.org/manuscript/202511.0701/v5">Nested Squares and Distinct-Prime Goldbach Partitions</a>.</p>
+  </body>
 </html>
